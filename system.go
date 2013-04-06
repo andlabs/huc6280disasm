@@ -14,6 +14,7 @@ var pages [8]struct{
 }
 
 var carryflag int
+var carryflag_valid bool
 
 func init() {
 	// TODO verify all this
@@ -24,6 +25,7 @@ func init() {
 	pages[7].which = 0x00		// we need the vectors at startup
 	pages[7].valid = true
 	carryflag = 0
+	carryflag_valid = false
 }
 
 func physical(logical uint16) uint32 {
