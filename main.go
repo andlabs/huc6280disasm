@@ -30,7 +30,7 @@ func errorf(format string, args ...interface{}) {
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: %s ROM"
+	fmt.Fprintf(os.Stderr, "usage: %s ROM", os.Args[0])
 	flag.PrintDefaults()
 	os.Exit(1)
 }
