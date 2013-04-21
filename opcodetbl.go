@@ -194,14 +194,14 @@ var opcodes = [0x100]opcode{
 
 	// lda: load to a
 	0xA9:	lda_immediate,		// lda #nn
-	0xA5:	lda_zeropage,			// lda zz
-	0xB5:	lda_zeropagex,		// lda zz,x
-	0xB2:	lda_indirect,			// lda (zz)
-	0xA1:	lda_indirectx,			// lda (zz,x)
-	0xB1:	lda_indirecty,			// lda (zz),y
-	0xAD:	lda_absolute,			// lda hhll
-	0xBD:	lda_absolutex,			// lda hhll,x
-	0xB9:	lda_absolutey,			// lda hhll,y
+	0xA5:	op_zeropage("lda"),		// lda zz
+	0xB5:	op_zeropagex("lda"),	// lda zz,x
+	0xB2:	op_indirect("lda"),		// lda (zz)
+	0xA1:	op_indirectx("lda"),		// lda (zz,x)
+	0xB1:	op_indirecty("lda"),		// lda (zz),y
+	0xAD:	op_absolute("lda"),		// lda hhll
+	0xBD:	op_absolutex("lda"),		// lda hhll,x
+	0xB9:	op_absolutey("lda"),		// lda hhll,y
 
 	// ldx: load to x
 	0xA2:	op_immediate("ldx"),	// ldx #nn
