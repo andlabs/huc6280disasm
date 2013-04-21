@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 // paging reference: http://turbo.mindrec.com/tginternals/hw/
@@ -65,7 +66,7 @@ func tma_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 		return fmt.Sprintf("tma\t<invalid $%02X>", b), pos, false
 	}
 	page := tmapages[b]
-	a = pages[page].value
+	a = pages[page].which
 	a_valid = pages[page].valid
 	return fmt.Sprintf("tma\t#%d", page), pos, false
 }

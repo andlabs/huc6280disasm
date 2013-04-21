@@ -7,12 +7,9 @@ import (
 	"os"
 	"flag"
 	"io/ioutil"
-	bytespkg "bytes"
-	"encoding/binary"
 )
 
 var bytes []byte
-var words []uint16
 var instructions map[uint32]string
 var labels map[uint32]string
 
@@ -25,7 +22,7 @@ var vectorLocs = map[uint32]string{
 }
 
 func errorf(format string, args ...interface{}) {
-	fmg.Fprintf(os.Stderr, format, args...)
+	fmt.Fprintf(os.Stderr, format, args...)
 	os.Exit(1)
 }
 
@@ -36,6 +33,8 @@ func usage() {
 }
 
 func main() {
+	var err error
+
 	flag.Usage = usage
 	flag.Parse()
 	if flag.NArg() != 1 {
@@ -54,12 +53,6 @@ func main() {
 	if len(bytes) >= 0x1F0000 {
 		errorf("given input file %s too large (this restriction may be lifted in the future)", filename)
 	}
-	words = make([]uint16, len(bytes) / 2)
-	err = binary.Read(bytespkg.NewReader(b), binary.LittleEndian, &words)
-	if err != nil {
-		errorf("error building words array from input byte stream: %v", err)
-	}
-	// TODO do we just assume the slice was filled properly?
 
 	instructions = map[uint32]string{}
 	labels = map[uint32]string{}
@@ -72,10 +65,7 @@ func main() {
 		} else {
 			labels[addr] = label
 		}
-		addr /= 2		// words
-		pos := uint32(words[addr])
-		// TODO handle bad addresses here or in disassemble()?
-		disassemble(pos)
+		disassemble(addr)
 	}
 
 	// TODO read additional starts from standard input

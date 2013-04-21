@@ -33,9 +33,9 @@ func disassemble(pos uint32) {
 }
 
 func getword(pos uint32) (w uint16, newpos uint32) {
-	w = uint16(byte[pos])
+	w = uint16(bytes[pos])
 	pos++
-	w |= uint16(byte[pos]) << 8
+	w |= uint16(bytes[pos]) << 8
 	pos++
 	return w, pos
 }
