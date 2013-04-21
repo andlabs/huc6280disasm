@@ -55,7 +55,7 @@ func jmp_absolutex(pos uint32) (disassembled string, newpos uint32, done bool) {
 }
 
 // jmp (hhll)
-func jmp_indirect(pos uint32) (disassembled string, newpos uint32, done bool) {
+func jmp_absoluteindirect(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword()
 	return fmt.Sprintf("jmp\t($%04X)", w), pos, true
 }

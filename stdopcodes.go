@@ -1,4 +1,5 @@
 // 21 april 2013
+package main
 
 import (
 	"fmt"
