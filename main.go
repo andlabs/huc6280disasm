@@ -65,8 +65,9 @@ func main() {
 		} else {
 			labels[addr] = label
 		}
-		disassemble(addr)
+		queueDisassemble(addr)
 	}
+	disassemble()
 
 	// TODO read additional starts from standard input
 	// TODO print

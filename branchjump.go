@@ -13,7 +13,7 @@ func dobranch(pos uint32) (label string, newpos uint32) {
 	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
 	label = mklabel(bpos, "loc")
-	disassemble(bpos)
+	queueDisassemble(bpos)
 	return label, pos
 }
 
@@ -69,7 +69,7 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 		return fmt.Sprintf("jsr\t$%04X", w), pos, true
 	}
 	label := mklabel(phys, "sub")
-	disassemble(phys)
+	queueDisassemble(phys)
 	return fmt.Sprintf("jsr\t%s", label), pos, false
 }
 

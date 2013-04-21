@@ -8,7 +8,18 @@ import (
 
 const operandString = "---"
 
-func disassemble(pos uint32) {
+var toDisassemble []uint32
+
+func queueDisassemble(physical uint32) {
+	toDisassemble = append(toDisassemble, physical)
+}
+
+func doDisassemble() (done bool) {
+	if len(toDisassemble) == 0 {
+		return true
+	}
+	pos := toDisassemble[0]
+	toDisassemble = toDisassemble[1:]
 	for {
 		if _, already := instructions[pos]; already {
 			break		// reached a point we previously reached
@@ -29,6 +40,13 @@ func disassemble(pos uint32) {
 			break
 		}
 		pos = newpos
+	}
+	return false
+}
+
+func disassemble() {
+	for doDisassemble() {
+		// do nothing
 	}
 }
 
