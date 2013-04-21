@@ -39,3 +39,10 @@ func getword(pos uint32) (w uint16, newpos uint32) {
 	pos++
 	return w, pos
 }
+
+func mklabel(bpos uint32, prefix string) (label string) {
+	if labels[bpos] == "" {
+		labels[bpos] = fmt.Sprintf("%s_%X", prefix, bpos)
+	}
+	return labels[bpos]
+}

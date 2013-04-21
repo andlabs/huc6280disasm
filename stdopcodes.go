@@ -7,6 +7,7 @@ import (
 // xxx #nn
 func op_immediate(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
+		invalidate()
 		b := bytes[pos]
 		pos++
 		return fmt.Sprintf("%s\t#$%02X", m, b), pos, false

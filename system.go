@@ -28,14 +28,14 @@ func init() {
 	carryflag_valid = false
 }
 
-func physical(logical uint16) uint32 {
+func physical(logical uint16) (uint32, error) {
 	page := (logical & 0xE000) >> 14
 	if !pages[page].valid {
-		errorf("attempt to get physical address of logical $%X, but the page has not yet been initialized", logical)
+		return 0, fmt.Errorf("attempt to get physical address of logical $%X, but the page has not yet been initialized", logical)
 	}
 	physical := uint32(logical) &^ 0xE000
 	physical |= 0x2000 * uint32(pages[page].which)
-	return physical
+	return physical, nil
 }
 
 func invalidate() {
