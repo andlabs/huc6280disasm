@@ -69,3 +69,44 @@ func tma_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	a_valid = pages[page].valid
 	return fmt.Sprintf("tma\t#%d", page), pos, false
 }
+
+// these are only special because of their unique formats
+// TODO do any of them touch a?
+
+// tst #nn,zz
+func tst_zeropage(pos uint32) (disassembled string, newpos uint32, done bool) {
+	invalidate()
+	b := bytes[pos]
+	pos++
+	z := bytes[pos]
+	pos++
+	return fmt.Sprintf("tst\t#$%02X,%02X", b, z), pos, false
+}
+
+// tst #nn,zz,x
+func tst_zeropagex(pos uint32) (disassembled string, newpos uint32, done bool) {
+	invalidate()
+	b := bytes[pos]
+	pos++
+	z := bytes[pos]
+	pos++
+	return fmt.Sprintf("tst\t#$%02X,%02X,x", b, z), pos, false
+}
+
+// tst #nn,hhll
+func tst_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
+	invalidate()
+	b := bytes[pos]
+	pos++
+	w, pos := getword(pos)
+	return fmt.Sprintf("tst\t#$%02X,%04X", b, w), pos, false
+}
+
+// tst #nn,hhll,x
+func tst_absolutex(pos uint32) (disassembled string, newpos uint32, done bool) {
+	invalidate()
+	b := bytes[pos]
+	pos++
+	w, pos := getword(pos)
+	return fmt.Sprintf("tst\t#$%02X,%04X,x", b, w), pos, false
+}
