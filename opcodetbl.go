@@ -6,7 +6,9 @@ package main
 // TODO adjust immediates so that they have effect on a
 // TODO figure out which have no effect on a and make them not mark a as invalid
 
-var opcodetbl = [0x100]xxxxx{
+type opcode func(pos uint32) (disassembled string, newpos uint32, done bool)
+
+var opcodes = [0x100]opcode{
 	// adc: add with carry
 	0x69:	op_immediate("adc"),	// adc #nn
 	0x65:	op_zeropage("adc"),		// adc zz
