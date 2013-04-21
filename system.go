@@ -37,3 +37,8 @@ func physical(logical uint16) uint32 {
 	physical |= 0x2000 * uint32(pages[page].which)
 	return physical
 }
+
+func invalidate() {
+	a_valid = false
+	carryflag_valid = false
+}
