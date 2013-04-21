@@ -44,7 +44,7 @@ func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	return fmt.Sprintf("tam\t%s", prstring), pos, false
 }
 
-var tmapages = map[byte]string{
+var tmapages = map[byte]int{
 	0x01:	0,
 	0x02:	1,
 	0x04:	2,

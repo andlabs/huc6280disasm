@@ -12,7 +12,7 @@ func dobranch(pos uint32) (label string, newpos uint32) {
 	offset := int32(int8(b))
 	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
-	label := mklabel(bpos, "loc")
+	label = mklabel(bpos, "loc")
 	disassemble(bpos)
 	return label, pos
 }
@@ -37,7 +37,7 @@ func op_zpbitbr(m string, n int) opcode {
 
 // jmp hhll
 func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
-	w, pos := getword()
+	w, pos := getword(pos)
 	phys, err := physical(w)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "cannot get physical address for jmp to $%04X: %v\n", w, err)
@@ -50,19 +50,19 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 
 // jmp hhll,x
 func jmp_absolutex(pos uint32) (disassembled string, newpos uint32, done bool) {
-	w, pos := getword()
+	w, pos := getword(pos)
 	return fmt.Sprintf("jmp\t$%04X,x", w), pos, true
 }
 
 // jmp (hhll)
 func jmp_absoluteindirect(pos uint32) (disassembled string, newpos uint32, done bool) {
-	w, pos := getword()
+	w, pos := getword(pos)
 	return fmt.Sprintf("jmp\t($%04X)", w), pos, true
 }
 
 // jsr hhll
 func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
-	w, pos := getword()
+	w, pos := getword(pos)
 	phys, err := physical(w)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "cannot get physical address for jsr to $%04X: %v\n", w, err)
