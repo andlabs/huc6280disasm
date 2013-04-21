@@ -118,7 +118,7 @@ var opcodes = [0x100]opcode{
 	0xC2:	op_noarguments("cly"),	// cly
 
 	// clx: clear x register
-	0x82:	op_noargument("clx"),	// clx
+	0x82:	op_noarguments("clx"),	// clx
 
 	// cpx: compare x
 	0xE0:	op_immediate("cpx"),	// cpx #nn

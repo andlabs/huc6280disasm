@@ -115,3 +115,24 @@ func op_noarguments(m string) opcode {
 		return fmt.Sprintf("%s", m), pos, false
 	}
 }
+
+// xxx #nn,zz
+func op_zpbit(m string, n int) opcode {
+	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
+		invalidate()
+		b := bytes[pos]
+		pos++
+		return fmt.Sprintf("%s\t#%d,$%02X", m, n, b), pos, false
+	}
+}
+
+// xxx hhll,hhll,hhll
+func op_transfer(m string) opcode {
+	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
+		invalidate()
+		src, pos := getword(pos)		// TODO make labels for src and dest?
+		dest, pos := getword(pos)
+		len, pos := getword(pos)
+		return fmt.Sprintf("%s\t$%04X,$%04X,$%04X", m, src, dest, len), pos, false
+	}
+}
