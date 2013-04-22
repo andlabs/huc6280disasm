@@ -12,6 +12,7 @@ import (
 var bytes []byte
 var instructions map[uint32]string
 var labels map[uint32]string
+var comments map[uint32]string
 
 var vectorLocs = map[uint32]string{
 	0x1FFE:	"EntryPoint",
@@ -56,6 +57,7 @@ func main() {
 
 	instructions = map[uint32]string{}
 	labels = map[uint32]string{}
+	comments = map[uint32]string{}
 
 	// autoanalyze vectors
 	for addr, label := range vectorLocs {

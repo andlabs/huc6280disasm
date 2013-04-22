@@ -40,7 +40,7 @@ func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	for i := 0; i < 8; i++ {
 		if b & 1 != 0 {		// mark this one
 			if !a_valid {
-				fmt.Fprintf(os.Stderr, "cannot apply new page because a is not valid at $%X\n", pos - 2)
+				addcomment(pos - 2, "(!) cannot apply new page because a is not valid")
 			} else {
 				pages[curpage].which = a
 				pages[curpage].valid = true

@@ -64,3 +64,11 @@ func mklabel(bpos uint32, prefix string) (label string) {
 	}
 	return labels[bpos]
 }
+
+func addcomment(pos uint32, format string, args ...interface{}) {
+	c := fmt.Sprintf(format, args...)
+	if comments[pos] != "" {
+		comments[pos] += " | "
+	}
+	comments[pos] += c
+}

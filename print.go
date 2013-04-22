@@ -12,7 +12,11 @@ func print() {
 			fmt.Printf("%s:\n", label)
 		}
 		if instruction, ok := instructions[i]; ok && instruction != operandString {
-			fmt.Printf("\t%s\t\t; $%X\n", instruction, i)
+			fmt.Printf("\t%s\t\t; $%X", instruction, i)
+			if comment, ok := comments[i]; ok {
+				fmt.Printf(" | %s", comment)
+			}
+			fmt.Println()
 		}
 	}
 }

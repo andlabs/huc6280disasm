@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+// TODO change "valid" to "known"
+
 var a byte
 var a_valid bool
 
