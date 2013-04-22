@@ -8,18 +8,7 @@ import (
 
 const operandString = "---"
 
-var toDisassemble []uint32
-
-func queueDisassemble(physical uint32) {
-	toDisassemble = append(toDisassemble, physical)
-}
-
-func doDisassemble() {
-	if len(toDisassemble) == 0 {
-		return
-	}
-	pos := toDisassemble[0]
-	toDisassemble = toDisassemble[1:]
+func disassemble(pos uint32) {
 	if pos >= uint32(len(bytes)) {
 		fmt.Fprintf(os.Stderr, "cannot disassemble at $%X as it is past ROM (size $%X bytes)\n", pos, len(bytes))
 		return
@@ -44,12 +33,6 @@ func doDisassemble() {
 			break
 		}
 		pos = newpos
-	}
-}
-
-func disassemble() {
-	for len(toDisassemble) != 0 {
-		doDisassemble()
 	}
 }
 

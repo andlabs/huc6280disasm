@@ -89,9 +89,8 @@ func main() {
 			labels[pos] = label
 		}
 		labelpriorities[pos] = lpSub
-		queueDisassemble(pos)
+		disassemble(pos)
 	}
-	disassemble()
 
 	// TODO read additional starts from standard input
 

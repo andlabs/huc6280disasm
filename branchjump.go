@@ -13,7 +13,7 @@ func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
 	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
 	mklabel(bpos, "loc", lpLoc)
-	queueDisassemble(bpos)
+	disassemble(bpos)
 	return bpos, pos
 }
 
@@ -48,7 +48,7 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	}
 	mklabel(phys, "loc", lpLoc)
 	labelplaces[pos - 3] = phys
-	queueDisassemble(phys)
+	disassemble(phys)
 	return fmt.Sprintf("jmp\t%%s"), pos, true
 }
 
@@ -76,7 +76,7 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	}
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 3] = phys
-	queueDisassemble(phys)
+	disassemble(phys)
 	return fmt.Sprintf("jsr\t%%s"), pos, false
 }
 
