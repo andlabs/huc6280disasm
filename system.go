@@ -7,10 +7,15 @@ import (
 
 // TODO change "valid" to "known"
 
+type validbyte struct {
+	value	byte
+	valid		bool
+}
+
 var a byte
 var a_valid bool
 
-var pages [8]struct{
+var pages [8]struct {
 	which	byte
 	valid		bool
 }
@@ -43,4 +48,34 @@ func physical(logical uint16) (uint32, error) {
 func invalidate() {
 	a_valid = false
 	carryflag_valid = false
+}
+
+var stack []validbyte
+
+func push(value byte, valid bool) {
+	stack = append(stack, validbyte{
+		value:	value,
+		valid:	valid,
+	})
+}
+
+func pop() (value byte, valid bool) {
+	if len(stack) == 0 {
+		return 0, false	// TODO correct?
+	}
+	t := stack[len(stack) - 1]
+	stack = stack[:len(stack) - 1]
+	return t.value, t.valid
+}
+
+func pusha() {
+	push(a, a_valid)
+}
+
+func pushinvalid() {
+	push(a, false)		// value of a irrelevant
+}
+
+func popa() {
+	a, a_valid = pop()
 }

@@ -31,6 +31,35 @@ func dec_accumulator(pos uint32) (disassembled string, newpos uint32, done bool)
 	return fmt.Sprintf("dec\ta"), pos, false
 }
 
+// pha
+func pha_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
+//	pusha()
+	return "pha", pos, false
+}
+
+// php, phx, phy
+func op_push(m string) opcode {
+	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
+//		pushinvalid()
+		return fmt.Sprintf("%s", m), pos, false
+	}
+}
+
+// pla
+func pla_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
+//	popa()
+	invalidate()
+	return "pla", pos, false
+}
+
+// plp, plx, ply
+func op_pop(m string) opcode {
+	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
+//		pop()
+		return fmt.Sprintf("%s", m), pos, false
+	}
+}
+
 // tam #nn,...
 func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	b := bytes[pos]

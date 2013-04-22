@@ -240,28 +240,28 @@ var opcodes = [0x100]opcode{
 	0xEA:	op_noarguments("nop"),	// nop
 
 	// pha: push a
-	0x48:	op_noarguments("pha"),	// pha
+	0x48:	pha_noarguments,		// pha
 
 	// php: push p (status register)
-	0x08:	op_noarguments("php"),	// php
+	0x08:	op_push("php"),		// php
 
 	// phx: push x
-	0xDA:	op_noarguments("phx"),	// phx
+	0xDA:	op_push("phx"),		// phx
 
 	// phy: push y
-	0x5A:	op_noarguments("phy"),	// phy
+	0x5A:	op_push("phy"),		// phy
 
 	// pla: pop a
-	0x68:	op_noarguments("pla"),	// pla
+	0x68:	pla_noarguments,		// pla
 
 	// plp: pop p
-	0x28:	op_noarguments("plp"),	// plp
+	0x28:	op_pop("plp"),			// plp
 
 	// plx: pop x
-	0xFA:	op_noarguments("plx"),	// plx
+	0xFA:	op_pop("plx"),			// plx
 
 	// ply: pop y
-	0x7A:	op_noarguments("ply"),	// ply
+	0x7A:	op_pop("ply"),			// ply
 
 	// rol: rotate left
 	0x26:	op_zeropage("rol"),		// rol zz
