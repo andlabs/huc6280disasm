@@ -12,7 +12,16 @@ import (
 var bytes []byte
 var instructions map[uint32]string
 var labels map[uint32]string
+var labelpriorities map[uint32]int
+var labelplaces map[uint32]uint32
 var comments map[uint32]string
+
+const (
+	lpLoc = iota
+	lpLocret
+	lpSub
+	lpUser
+)
 
 var vectorLocs = map[uint32]string{
 	0x1FFE:	"EntryPoint",
@@ -62,6 +71,8 @@ func main() {
 
 	instructions = map[uint32]string{}
 	labels = map[uint32]string{}
+	labelpriorities = map[uint32]int{}
+	labelplaces = map[uint32]uint32{}
 	comments = map[uint32]string{}
 
 	// autoanalyze vectors
@@ -77,6 +88,7 @@ func main() {
 		} else {
 			labels[pos] = label
 		}
+		labelpriorities[pos] = lpSub
 		queueDisassemble(pos)
 	}
 	disassemble()

@@ -6,22 +6,23 @@ import (
 	"os"
 )
 
-func dobranch(pos uint32) (label string, newpos uint32) {
+func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
 	b := bytes[pos]
 	pos++
 	offset := int32(int8(b))
 	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
-	label = mklabel(bpos, "loc")
+	mklabel(bpos, "loc", lpLoc)
 	queueDisassemble(bpos)
-	return label, pos
+	return bpos, pos
 }
 
 // xxx label
 func op_branch(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
-		label, pos := dobranch(pos)
-		return fmt.Sprintf("%s\t%s", m, label), pos, false
+		labelpos, pos := dobranch(pos)
+		labelplaces[pos - 2] = labelpos
+		return fmt.Sprintf("%s\t%%s", m), pos, false
 	}
 }
 
@@ -30,9 +31,10 @@ func op_zpbitbr(m string, n int) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		b := bytes[pos]
 		pos++
-		label, pos := dobranch(pos)
+		labelpos, pos := dobranch(pos)
+		labelplaces[pos - 3] = labelpos
 		addoperandcomment(pos - 3, uint16(b))
-		return fmt.Sprintf("%s\t#%d,$%02X,%s", m, n, b, label), pos, false
+		return fmt.Sprintf("%s\t#%d,$%02X,%%s", m, n, b), pos, false
 	}
 }
 
@@ -44,9 +46,10 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 		fmt.Fprintf(os.Stderr, "cannot get physical address for jmp to $%04X: %v\n", w, err)
 		return fmt.Sprintf("jmp\t$%04X", w), pos, true
 	}
-	label := mklabel(phys, "loc")
+	mklabel(phys, "loc", lpLoc)
+	labelplaces[pos - 3] = phys
 	queueDisassemble(phys)
-	return fmt.Sprintf("jmp\t%s", label), pos, true
+	return fmt.Sprintf("jmp\t%%s"), pos, true
 }
 
 // jmp hhll,x
@@ -71,9 +74,10 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 		fmt.Fprintf(os.Stderr, "cannot get physical address for jsr to $%04X: %v\n", w, err)
 		return fmt.Sprintf("jsr\t$%04X", w), pos, true
 	}
-	label := mklabel(phys, "sub")
+	mklabel(phys, "sub", lpSub)
+	labelplaces[pos - 3] = phys
 	queueDisassemble(phys)
-	return fmt.Sprintf("jsr\t%s", label), pos, false
+	return fmt.Sprintf("jsr\t%%s"), pos, false
 }
 
 // rti

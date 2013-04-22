@@ -62,9 +62,16 @@ func getword(pos uint32) (w uint16, newpos uint32) {
 }
 
 // TODO watch for labels that cross into multi-byte instructions (that's what operandString is for)
-func mklabel(bpos uint32, prefix string) (label string) {
-	if labels[bpos] == "" {
+func mklabel(bpos uint32, prefix string, priority int) (label string) {
+	mk := false
+	if labels[bpos] == "" {					// new label
+		mk = true
+	} else if labelpriorities[bpos] <= priority {		// higher (or same) priority label
+		mk = true
+	}
+	if mk {
 		labels[bpos] = fmt.Sprintf("%s_%X", prefix, bpos)
+		labelpriorities[bpos] = priority
 	}
 	return labels[bpos]
 }
