@@ -20,6 +20,10 @@ func doDisassemble() {
 	}
 	pos := toDisassemble[0]
 	toDisassemble = toDisassemble[1:]
+	if pos >= uint32(len(bytes)) {
+		fmt.Fprintf(os.Stderr, "cannot disassemble at $%X as it is past ROM (size $%X bytes)\n", pos, len(bytes))
+		return
+	}
 	for {
 		if _, already := instructions[pos]; already {
 			break		// reached a point we previously reached
