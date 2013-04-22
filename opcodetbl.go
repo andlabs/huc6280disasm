@@ -150,7 +150,7 @@ var opcodes = [0x100]opcode{
 	0xD6:	op_zeropagex("dec"),	// dec zz,x
 	0xCE:	op_absolute("dec"),		// dec hhll
 	0xDE:	op_absolutex("dec"),	// dec hhll,x
-	0x3A:	op_accumulator("dec"),	// dec a
+	0x3A:	dec_accumulator,		// dec a
 
 	// cpy: compare y
 	0xC0:	op_immediate("cpy"),	// cpy #nn
@@ -173,7 +173,7 @@ var opcodes = [0x100]opcode{
 	0xF6:	op_zeropagex("inc"),	// inc zz,x
 	0xEE:	op_absolute("inc"),		// inc hhll
 	0xFE:	op_absolutex("inc"),		// inc hhll,x
-	0x1A:	op_accumulator("inc"),	// inc a
+	0x1A:	inc_accumulator,		// inc a
 
 	// inx: increment x
 	0xE8:	op_noarguments("inx"),	// inx

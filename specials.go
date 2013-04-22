@@ -17,6 +17,20 @@ func lda_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
 	return fmt.Sprintf("lda\t#$%02X", b), pos, false
 }
 
+// inc a
+func inc_accumulator(pos uint32) (disassembled string, newpos uint32, done bool) {
+	// whether or not a is valid does not matter here (if a is invalid the value will not be used anyway)
+	a++
+	return fmt.Sprintf("inc\ta"), pos, false
+}
+
+// dec a
+func dec_accumulator(pos uint32) (disassembled string, newpos uint32, done bool) {
+	// whether or not a is valid does not matter here (if a is invalid the value will not be used anyway)
+	a--
+	return fmt.Sprintf("dec\ta"), pos, false
+}
+
 // tam #nn,...
 func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	b := bytes[pos]
