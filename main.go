@@ -59,16 +59,16 @@ func main() {
 
 	// autoanalyze vectors
 	for addr, label := range vectorLocs {
-		if labels[addr] != "" {		// if already defined as a different vector, concatenate the labels to make sure everything is represented
-			// TODO because this uses a map, it will not be in vector order
-			labels[addr] = labels[addr] + "_" + label
-		} else {
-			labels[addr] = label
-		}
 		posw, _ := getword(addr)
 		pos, err := physical(posw)
 		if err != nil {
 			errorf("internal error: could not get physical address for %s vector (meaning something is up with the paging or the game actually does have the vector outside page 7): %v\n", label, err)
+		}
+		if labels[pos] != "" {		// if already defined as a different vector, concatenate the labels to make sure everything is represented
+			// TODO because this uses a map, it will not be in vector order
+			labels[pos] = labels[pos] + "_" + label
+		} else {
+			labels[pos] = label
 		}
 		queueDisassemble(pos)
 	}
