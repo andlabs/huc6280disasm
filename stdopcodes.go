@@ -21,6 +21,7 @@ func op_zeropage(m string) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t$%02X", m, b), pos, false
 	}
 }
@@ -31,6 +32,7 @@ func op_zeropagex(m string) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t$%02X,x", m, b), pos, false
 	}
 }
@@ -41,6 +43,7 @@ func op_zeropagey(m string) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t$%02X,y", m, b), pos, false
 	}
 }
@@ -51,6 +54,7 @@ func op_indirect(m string) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t($%02X)", m, b), pos, false
 	}
 }
@@ -61,6 +65,7 @@ func op_indirectx(m string) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t($%02X,x)", m, b), pos, false
 	}
 }
@@ -71,6 +76,7 @@ func op_indirecty(m string) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t($%02X),y", m, b), pos, false
 	}
 }
@@ -80,6 +86,7 @@ func op_absolute(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		invalidate()
 		w, pos := getword(pos)
+		addoperandcomment(pos - 3, w)
 		return fmt.Sprintf("%s\t$%04X", m, w), pos, false
 	}
 }
@@ -89,6 +96,7 @@ func op_absolutex(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		invalidate()
 		w, pos := getword(pos)
+		addoperandcomment(pos - 3, w)
 		return fmt.Sprintf("%s\t$%04X,x", m, w), pos, false
 	}
 }
@@ -98,6 +106,7 @@ func op_absolutey(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		invalidate()
 		w, pos := getword(pos)
+		addoperandcomment(pos - 3, w)
 		return fmt.Sprintf("%s\t$%04X,y", m, w), pos, false
 	}
 }
@@ -124,6 +133,7 @@ func op_zpbit(m string, n int) opcode {
 		invalidate()
 		b := bytes[pos]
 		pos++
+		addoperandcomment(pos - 2, uint16(b))
 		return fmt.Sprintf("%s\t#%d,$%02X", m, n, b), pos, false
 	}
 }
@@ -135,6 +145,8 @@ func op_transfer(m string) opcode {
 		src, pos := getword(pos)		// TODO make labels for src and dest?
 		dest, pos := getword(pos)
 		len, pos := getword(pos)
+		addoperandcomment(pos - 7, src)
+		addoperandcomment(pos - 7, dest)
 		return fmt.Sprintf("%s\t$%04X,$%04X,$%04X", m, src, dest, len), pos, false
 	}
 }

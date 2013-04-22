@@ -31,6 +31,7 @@ func op_zpbitbr(m string, n int) opcode {
 		b := bytes[pos]
 		pos++
 		label, pos := dobranch(pos)
+		addoperandcomment(pos - 3, uint16(b))
 		return fmt.Sprintf("%s\t#%d,$%02X,%s", m, n, b, label), pos, false
 	}
 }
@@ -51,12 +52,14 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 // jmp hhll,x
 func jmp_absolutex(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
+	addoperandcomment(pos - 3, w)
 	return fmt.Sprintf("jmp\t$%04X,x", w), pos, true
 }
 
 // jmp (hhll)
 func jmp_absoluteindirect(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
+	addoperandcomment(pos - 3, w)
 	return fmt.Sprintf("jmp\t($%04X)", w), pos, true
 }
 

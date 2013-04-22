@@ -72,3 +72,12 @@ func addcomment(pos uint32, format string, args ...interface{}) {
 	}
 	comments[pos] += c
 }
+
+func addoperandcomment(pos uint32, logical uint16) {
+	physical, err := physical(logical)
+	if err != nil {
+		addcomment(pos, "$%04X - cannot get physical address (%v)", logical, err)
+		return
+	}
+	addcomment(pos, "$%04X -> $%X", logical, physical)
+}

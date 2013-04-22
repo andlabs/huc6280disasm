@@ -95,6 +95,7 @@ func tst_zeropage(pos uint32) (disassembled string, newpos uint32, done bool) {
 	pos++
 	z := bytes[pos]
 	pos++
+	addoperandcomment(pos - 3, uint16(z))
 	return fmt.Sprintf("tst\t#$%02X,%02X", b, z), pos, false
 }
 
@@ -105,6 +106,7 @@ func tst_zeropagex(pos uint32) (disassembled string, newpos uint32, done bool) {
 	pos++
 	z := bytes[pos]
 	pos++
+	addoperandcomment(pos - 3, uint16(z))
 	return fmt.Sprintf("tst\t#$%02X,%02X,x", b, z), pos, false
 }
 
@@ -114,6 +116,7 @@ func tst_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	b := bytes[pos]
 	pos++
 	w, pos := getword(pos)
+	addoperandcomment(pos - 4, w)
 	return fmt.Sprintf("tst\t#$%02X,%04X", b, w), pos, false
 }
 
@@ -123,5 +126,6 @@ func tst_absolutex(pos uint32) (disassembled string, newpos uint32, done bool) {
 	b := bytes[pos]
 	pos++
 	w, pos := getword(pos)
+	addoperandcomment(pos - 4, w)
 	return fmt.Sprintf("tst\t#$%02X,%04X,x", b, w), pos, false
 }
