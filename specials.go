@@ -26,7 +26,7 @@ func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	for i := 0; i < 8; i++ {
 		if b & 1 != 0 {		// mark this one
 			if !a_valid {
-				fmt.Fprintf(os.Stderr, "cannot apply new page because a is not valid at $%X", pos - 2)
+				fmt.Fprintf(os.Stderr, "cannot apply new page because a is not valid at $%X\n", pos - 2)
 			} else {
 				pages[curpage].which = a
 				pages[curpage].valid = true
@@ -40,7 +40,7 @@ func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 		fmt.Fprintf(os.Stderr, "tam defining nothing at $%X\n", pos - 2)
 		prstring = "<nothing>"
 	} else {
-		prstring = prstring[:len(prstring) - 2]	// strip trailing comma
+		prstring = prstring[:len(prstring) - 1]	// strip trailing comma
 	}
 	return fmt.Sprintf("tam\t%s", prstring), pos, false
 }
