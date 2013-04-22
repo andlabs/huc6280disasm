@@ -29,7 +29,7 @@ func init() {
 }
 
 func physical(logical uint16) (uint32, error) {
-	page := (logical & 0xE000) >> 14
+	page := (logical & 0xE000) >> 13
 	if !pages[page].valid {
 		return 0, fmt.Errorf("attempt to get physical address of logical $%X, but the page has not yet been initialized", logical)
 	}

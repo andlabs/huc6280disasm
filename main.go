@@ -65,7 +65,12 @@ func main() {
 		} else {
 			labels[addr] = label
 		}
-		queueDisassemble(addr)
+		posw, _ := getword(addr)
+		pos, err := physical(posw)
+		if err != nil {
+			errorf("internal error: could not get physical address for %s vector (meaning something is up with the paging or the game actually does have the vector outside page 7): %v\n", label, err)
+		}
+		queueDisassemble(pos)
 	}
 	disassemble()
 
