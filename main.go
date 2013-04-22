@@ -70,5 +70,6 @@ func main() {
 	disassemble()
 
 	// TODO read additional starts from standard input
-	// TODO print
+
+	print()
 }
