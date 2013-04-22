@@ -27,8 +27,13 @@ func errorf(format string, args ...interface{}) {
 	os.Exit(1)
 }
 
+// command-line options
+var (
+	useStack = flag.Bool("stack", false, "follow stack for tam/tma values (may fix some broken disassemblies but breaks if some subroutine breaks the push/pop system (TODO add jsr and rts))")
+)
+
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: %s ROM", os.Args[0])
+	fmt.Fprintf(os.Stderr, "usage: %s [-stack] ROM\n", os.Args[0])
 	flag.PrintDefaults()
 	os.Exit(1)
 }

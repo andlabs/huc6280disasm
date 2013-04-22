@@ -33,29 +33,38 @@ func dec_accumulator(pos uint32) (disassembled string, newpos uint32, done bool)
 
 // pha
 func pha_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
-//	pusha()
+	if *useStack {
+		pusha()
+	}
 	return "pha", pos, false
 }
 
 // php, phx, phy
 func op_push(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
-//		pushinvalid()
+		if *useStack {
+			pushinvalid()
+		}
 		return fmt.Sprintf("%s", m), pos, false
 	}
 }
 
 // pla
 func pla_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
-//	popa()
-	invalidate()
+	if *useStack {
+		popa()
+	} else {
+		invalidate()
+	}
 	return "pla", pos, false
 }
 
 // plp, plx, ply
 func op_pop(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
-//		pop()
+		if *useStack {
+			pop()
+		}
 		return fmt.Sprintf("%s", m), pos, false
 	}
 }
