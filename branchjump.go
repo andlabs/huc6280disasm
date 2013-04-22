@@ -44,8 +44,8 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 		return fmt.Sprintf("jmp\t$%04X", w), pos, true
 	}
 	label := mklabel(phys, "loc")
-	pos = phys		// jump
-	return fmt.Sprintf("jmp\t%s", label), pos, false
+	queueDisassemble(phys)
+	return fmt.Sprintf("jmp\t%s", label), pos, true
 }
 
 // jmp hhll,x

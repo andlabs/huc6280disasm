@@ -14,9 +14,9 @@ func queueDisassemble(physical uint32) {
 	toDisassemble = append(toDisassemble, physical)
 }
 
-func doDisassemble() (done bool) {
+func doDisassemble() {
 	if len(toDisassemble) == 0 {
-		return true
+		return
 	}
 	pos := toDisassemble[0]
 	toDisassemble = toDisassemble[1:]
@@ -41,12 +41,11 @@ func doDisassemble() (done bool) {
 		}
 		pos = newpos
 	}
-	return false
 }
 
 func disassemble() {
-	for doDisassemble() {
-		// do nothing
+	for len(toDisassemble) != 0 {
+		doDisassemble()
 	}
 }
 
