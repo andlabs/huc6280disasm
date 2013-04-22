@@ -69,6 +69,67 @@ func op_pop(m string) opcode {
 	}
 }
 
+// sta zz
+func sta_zeropage(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b := bytes[pos]
+	pos++
+	addoperandcomment(pos - 2, uint16(b))
+	return fmt.Sprintf("sta\t$%02X", b), pos, false
+}
+
+// sta zz,x
+func sta_zeropagex(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b := bytes[pos]
+	pos++
+	addoperandcomment(pos - 2, uint16(b))
+	return fmt.Sprintf("sta\t$%02X,x", b), pos, false
+}
+
+// sta (zz)
+func sta_indirect(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b := bytes[pos]
+	pos++
+	addoperandcomment(pos - 2, uint16(b))
+	return fmt.Sprintf("sta\t($%02X)", b), pos, false
+}
+
+// sta (zz,x)
+func sta_indirectx(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b := bytes[pos]
+	pos++
+	addoperandcomment(pos - 2, uint16(b))
+	return fmt.Sprintf("sta\t($%02X,x)", b), pos, false
+}
+
+// sta (zz),y
+func sta_indirecty(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b := bytes[pos]
+	pos++
+	addoperandcomment(pos - 2, uint16(b))
+	return fmt.Sprintf("sta\t($%02X),y", b), pos, false
+}
+
+// sta hhll
+func sta_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
+	w, pos := getword(pos)
+	addoperandcomment(pos - 3, w)
+	return fmt.Sprintf("sta\t$%04X", w), pos, false
+}
+
+// sta hhll,x
+func sta_absolutex(pos uint32) (disassembled string, newpos uint32, done bool) {
+	w, pos := getword(pos)
+	addoperandcomment(pos - 3, w)
+	return fmt.Sprintf("sta\t$%04X,x", w), pos, false
+}
+
+// sta hhll,y
+func sta_absolutey(pos uint32) (disassembled string, newpos uint32, done bool) {
+	w, pos := getword(pos)
+	addoperandcomment(pos - 3, w)
+	return fmt.Sprintf("sta\t$%04X,y", w), pos, false
+}
+
 // tam #nn,...
 func tam_pageregs(pos uint32) (disassembled string, newpos uint32, done bool) {
 	b := bytes[pos]

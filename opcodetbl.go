@@ -346,14 +346,14 @@ func init() {
 		0xF7:	op_zpbit("smb", 7),		// smb #7,zz
 
 		// sta: store a
-		0x85:	op_zeropage("sta"),		// sta zz
-		0x95:	op_zeropagex("sta"),	// sta zz,x
-		0x92:	op_indirect("sta"),		// sta (zz)
-		0x81:	op_indirectx("sta"),		// sta (zz,x)
-		0x91:	op_indirecty("sta"),		// sta (zz),y
-		0x8D:	op_absolute("sta"),		// sta hhll
-		0x9D:	op_absolutex("sta"),		// sta hhll,x
-		0x99:	op_absolutey("sta"),		// sta hhll,y
+		0x85:	sta_zeropage,			// sta zz
+		0x95:	sta_zeropagex,			// sta zz,x
+		0x92:	sta_indirect,			// sta (zz)
+		0x81:	sta_indirectx,			// sta (zz,x)
+		0x91:	sta_indirecty,			// sta (zz),y
+		0x8D:	sta_absolute,			// sta hhll
+		0x9D:	sta_absolutex,			// sta hhll,x
+		0x99:	sta_absolutey,			// sta hhll,y
 
 		// stx: store x
 		0x86:	op_zeropage("stx"),		// stx zz
