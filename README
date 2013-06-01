@@ -1,0 +1,28 @@
+huc6280disasm is a disassembler for HuC6280 code. It tries to analyze code flow, much like IDA does. It disassembles flat boot ROMs for the system, but ROM behavior should match TurboGrafx-16 ROMs. This program is still young (younger than 65816disasm) and doesn't have all the features it should yet.
+
+Usage:
+	huc6280disasm [options] ROMfile
+
+Diagnostic messages are printed on standard error. The final disassembly is printed on standard output.
+
+Use -help (or leave no argument) for command line options.
+
+The format of output lines is
+	instruction	operand	; ROM address of instruction | logical address of operands, or other info about the operands
+There can be multiple of the above, separated by pipes. If you see a (!) in this field, then something went wrong; see the message.
+
+huc6280disasm tries not to make a mistake. It tries to follow the stack and the value of the a register properly as well, but static analysis like this can only go so far, and there may very well still be bugs. Feel free to suggest improvements.
+
+So far I have tested this on a number of ROMs.
+
+This package is go get-table, and does not rely on any external libraries.
+
+The program is released under the terms of the GPLv3 for now. I may make the license more relaxed in the future.
+
+Please feel free to file bug reports and make suggestions.
+
+Thanks to:
+- devin from The Cutting Room Floor for general help
+- various URLs in the source code
+- other URLs I need to put up here
+- anyone who I may have forgotten

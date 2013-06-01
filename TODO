@@ -1,0 +1,5 @@
+- add locret
+- figure out how to get disassemble to be recursive descent again so I can properly follow subroutines
+- for UI: comment command too
+- for UI: quick hexdump option
+- fix infinite recursion on branches and jumps to self
