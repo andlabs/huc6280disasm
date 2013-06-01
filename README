@@ -1,4 +1,4 @@
-huc6280disasm is a disassembler for HuC6280 code. It tries to analyze code flow, much like IDA does. It disassembles flat boot ROMs for the system, but ROM behavior should match TurboGrafx-16 ROMs. This program is still young (younger than 65816disasm) and doesn't have all the features it should yet.
+huc6280disasm is a disassembler for HuC6280 code. It tries to analyze code flow, much like IDA does. It disassembles flat boot ROMs for the system, but ROM behavior should match TurboGrafx-16 ROMs. This program is still young (younger than 65816disasm) and doesn't have all the features it should yet (and I seem to have forgotten some of the progress: the TODO file mentions the disassembler not being recursive-descent but it is... huh.).
 
 Usage:
 	huc6280disasm [options] ROMfile
